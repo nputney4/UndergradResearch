@@ -1,0 +1,55 @@
+def AminoAcidContacts(filenamelist): #Results in a file that has lists of all the files with the 
+                                     #desired amino acid contacts and what each of those contacts are
+    
+    import re #imports module for Regular Expressions
+    i=0
+    for filename in filenamelist: #iterates over each file in the list created by "Create_ListOfFiles"
+        numofcontacts = 0
+        text = ''
+        with open(filename, 'r') as f:
+            for lines in f:
+                text += lines #creates a string that contains all off the information from one file
+                
+        AAContact1 = re.findall('\s+10\s+\(.+\)\s+45\s+.+', text) #for all the tests, replace the numbers(i.e. the 9 and 12) with the interactions
+        AAContact2 = re.findall('\s+10\s+\(.+\)\s+46\s+.+', text) 
+        AAContact3 = re.findall('\s+12\s+\(.+\)\s+47\s+.+', text)
+        AAContact4 = re.findall('\s+16\s+\(.+\)\s+52\s+.+', text)
+        AAContact5 = re.findall('\s+17\s+\(.+\)\s+52\s+.+', text)
+        AAContact6 = re.findall('\s+16\s+\(.+\)\s+29\s+.+', text)
+        AAContact7 = re.findall('\s+16\s+\(.+\)\s+28\s+.+', text)
+        AAContact8 = re.findall('\s+17\s+\(.+\)\s+29\s+.+', text)
+        AAContact9 = re.findall('\s+17\s+\(.+\)\s+28\s+.+', text)
+        AAContact10 = re.findall('\s+19\s+\(.+\)\s+25\s+.+', text)
+        AAContact11 = re.findall('\s+19\s+\(.+\)\s+26\s+.+', text)
+
+
+        listofmatches = [AAContact1, AAContact2, AAContact3, AAContact4, AAContact5, AAContact6, AAContact7, #This is a list that contains of the matches for the file
+                         AAContact8, AAContact9, AAContact10, AAContact11] #If there is no match, there would simply be an empty list for each match it doesn't have
+                                            
+        
+        for char in listofmatches:
+                if char != []:
+                    numofcontacts +=1 #Counts the number of contacts of each file
+                    
+        if numofcontacts > 3: #This can be modified depending on how many contacts are needed
+                              #For this, only files that contain more than 3 of the desired contacts will be looked at   
+            
+            i+=1   
+             
+            with open('NTerm_4OrMoreContacts' , 'a') as g: 
+                g.write('>' + filename) #Writing the filename to a file named "NTerm_40OrMoreContacts"
+                g.write('\n')
+                
+                for elements in listofmatches: #Writing each amino acid contacts from the above list to a file
+                    try: 
+                        g.write(elements[0])
+                    except IndexError: #This is so the program doesn't stop when there is no amino acid contact, i.e. an empty list
+                        None
+                        
+                g.write('\n\n\n')
+        
+    with open('NTerm_4orMoreContacts', 'a') as g:
+        g.write('There are ' + str(i) + ' matches that have more than three contacts') #At the end of the file, this writes the total number of files that met the criteria
+    
+    
+AminoAcidContacts(filenamelist)
