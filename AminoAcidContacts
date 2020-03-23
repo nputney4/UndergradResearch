@@ -1,3 +1,16 @@
+def Create_ListOfFiles(): #returns a list of all of the filenames with "Contact_map_intra_sc_and_b"
+    
+    import os
+    
+    listoffiles = []
+    for filename in os.listdir(): #set working directory to location of files
+        if filename.startswith("Contact_map_intra_sc_and_b"):
+            listoffiles.append(filename)
+    return listoffiles
+    
+filenamelist = Create_ListOfFiles()       
+    
+
 def AminoAcidContacts(filenamelist): #Results in a file that has lists of all the files with the 
                                      #desired amino acid contacts and what each of those contacts are
     
