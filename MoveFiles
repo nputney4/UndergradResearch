@@ -1,0 +1,23 @@
+#The current working directory needs to be wherever the files being move are unless the exact path is used
+
+import shutil, os #import modules
+
+def CopyFilesFromTxt(filename, destination):  #destination and filename needs to be the exact path
+
+	with open(filename, 'r') as f:
+		PDBfilelist = []
+		for lines in f:
+			if lines[0] == '>':
+				PDBfilelist.append(lines[1:].strip()) #Add the file names from a text file to a list
+
+
+
+
+		
+	for f in PDBfilelist: #Copy all the specific files to an already made directory
+		shutil.copy(f, destination) 
+
+
+	
+
+CopyFilesFromTxt('C:\\Users\\Nick\\Documents\\filenames.txt', 'C:\\Users\\Nick\\Documents\\C_term_With_3HelixBundles' )
